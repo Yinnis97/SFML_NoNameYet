@@ -14,7 +14,8 @@ Game::~Game()
 void Game::Init_Var()
 {
 	shape.setRadius(500.0);
-	shape.setFillColor(sf::Color::Green);
+	shape.setFillColor(Color::Green);
+	shape.setOutlineColor(Color::Cyan);
 	window = nullptr;
 }
 

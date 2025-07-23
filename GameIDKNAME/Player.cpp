@@ -23,10 +23,28 @@ void Player::Init_()
 	
 }
 
+void Player::Move(char m)
+{
+	switch (m)
+	{
+	case 'Z':
+		sprite->move({ 0, MoveSpeedneg });
+		break;
+	case 'S':
+		sprite->move({ 0, MoveSpeedpos });
+		break;
+	case 'Q':
+		sprite->move({ MoveSpeedneg, 0 });
+		break;
+	case 'D':
+		sprite->move({ MoveSpeedpos, 0 });
+		break;
+	}
+}
+
 void Player::Update_Player(RenderWindow* window)
 {
-	
-	sprite->move({ 1,1 });
+
 	if ( (sprite->getPosition().y) >= (window->getSize().y) )
 	{
 		sprite->setPosition({ 0 ,0 });

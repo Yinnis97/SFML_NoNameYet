@@ -43,8 +43,13 @@ void Game::Pollevents()
 		}
 		else if (const auto* keyPressed = event->getIf<sf::Event::KeyPressed>())
 		{
-			if (keyPressed->scancode == sf::Keyboard::Scancode::Escape)
+			switch (keyPressed->scancode)
+			{
+			case Keyboard::Scancode::Escape:
 				window->close();
+				std::cout << "Escape\n";
+				break;
+			}
 		}
 	}
 }
@@ -52,6 +57,16 @@ void Game::Pollevents()
 void Game::Update()
 {
 	Pollevents();
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W))
+		player.Move('Z');
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A))
+		player.Move('Q');
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S))
+		player.Move('S');
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D))
+		player.Move('D');
+
 	player.Update_Player(window);
 }
 

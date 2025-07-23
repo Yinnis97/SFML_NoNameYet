@@ -5,6 +5,9 @@
 #include <optional>
 using namespace sf;
 
+#define MoveSpeedpos 10
+#define MoveSpeedneg -10
+
 class Player
 {
 private:
@@ -20,6 +23,7 @@ public:
 
 	void Init_();
 
+	void Move(char m);
 	void Update_Player(RenderWindow* window);
 	void Render_Player(RenderWindow *window);
 };

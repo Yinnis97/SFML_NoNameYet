@@ -55,11 +55,14 @@ void Game::Pollevents()
 void Game::Update()
 {
 	Pollevents();
+	player.Update_Player();
 }
 
 void Game::Render()
 {
 	window->clear();
-	window->draw(shape);
+
+	player.Render_Player(window);
+
 	window->display();
 }

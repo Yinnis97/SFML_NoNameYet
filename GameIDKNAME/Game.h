@@ -11,7 +11,6 @@ class Game
 private:
 	RenderWindow *window;
 	VideoMode videomode;
-	sf::CircleShape shape;
 	Player player;
 
 public:

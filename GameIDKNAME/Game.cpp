@@ -13,9 +13,6 @@ Game::~Game()
 
 void Game::Init_Var()
 {
-	shape.setRadius(500.0);
-	shape.setFillColor(Color::Green);
-	shape.setOutlineColor(Color::Cyan);
 	window = nullptr;
 }
 
@@ -55,7 +52,7 @@ void Game::Pollevents()
 void Game::Update()
 {
 	Pollevents();
-	player.Update_Player();
+	player.Update_Player(window);
 }
 
 void Game::Render()

@@ -21,6 +21,7 @@ void Game::Init_Window()
 	videomode = VideoMode::getDesktopMode();
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Windowed);
 	window->setVerticalSyncEnabled(true);
+	clock.restart();
 }
 
 void Game::Init_Background()
@@ -47,24 +48,42 @@ void Game::Pollevents()
 			{
 			case Keyboard::Scancode::Escape:
 				window->close();
-				std::cout << "Escape\n";
 				break;
 			}
 		}
 	}
 }
 
+const Vector2f Game::GetWindowSize()
+{
+    return static_cast<Vector2f>(this->window->getSize());
+}
+
+const Vector2f Game::GetupdateMousePos()
+{
+	return window->mapPixelToCoords(Mouse::getPosition(*this->window));
+}
+
 void Game::Update()
 {
 	Pollevents();
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::W))
+	if (Mouse::isButtonPressed(Mouse::Button::Left))
+	{
+		player.Shoot(GetupdateMousePos(), GetWindowSize(),1);
+	}
+	else
+	{
+		player.Shoot(GetupdateMousePos(), GetWindowSize(),0);
+	}
+
+	if (Keyboard::isKeyPressed(Keyboard::Scancode::W))
 		player.Move('Z');
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::A))
+	if (Keyboard::isKeyPressed(Keyboard::Scancode::A))
 		player.Move('Q');
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::S))
+	if (Keyboard::isKeyPressed(Keyboard::Scancode::S))
 		player.Move('S');
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Scancode::D))
+	if (Keyboard::isKeyPressed(Keyboard::Scancode::D))
 		player.Move('D');
 
 	player.Update_Player(window);

@@ -12,6 +12,7 @@ private:
 	RenderWindow *window;
 	VideoMode videomode;
 	Player player;
+	Clock clock;
 
 public:
 	Game();
@@ -24,6 +25,8 @@ public:
 	bool Running();
 
 	void Pollevents();
+	const Vector2f GetWindowSize();
+	const Vector2f GetupdateMousePos();
 
 	void Update();
 	void Render();

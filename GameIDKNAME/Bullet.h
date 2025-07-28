@@ -9,16 +9,17 @@ class Bullet
 {
 public:
 	CircleShape shape;
-	Vector2f currVelocity;
+	uint8_t damage;
 	float speed;
+	bool hitenemy;
 
-	Bullet(float radius)
-		: currVelocity(0.0f,0.0f), speed(15.f)
+	Bullet(float radius, uint8_t dmg, float spd)
+		: speed(spd), damage(dmg)
 	{
 		shape.setRadius(radius);
 		shape.setFillColor(Color::Black);
 		shape.setOutlineThickness(2.0);
 		shape.setOutlineColor(Color::Red);
+		hitenemy = false;
 	}
 };
-

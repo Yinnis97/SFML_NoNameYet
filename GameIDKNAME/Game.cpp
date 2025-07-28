@@ -14,15 +14,22 @@ Game::~Game()
 void Game::Init_Var()
 {
 	window = nullptr;
+	mouseheld = false;
 }
-
 void Game::Init_Window()
 {
 	videomode = VideoMode::getDesktopMode();
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Windowed);
 	window->setVerticalSyncEnabled(true);
-	clock.restart();
+
+	grid = new Grid(GetWindowSize());
+	
+	entities.push_back(new Boss);
+	towers.push_back(new Rocket({ 1000,100 }));
+	towers.push_back(new Sniper({ 1500,100 }));
+	towers.push_back(new Turret({ 2000,100 }));
 }
+
 
 void Game::Init_Background()
 {
@@ -56,6 +63,7 @@ void Game::Pollevents()
 
 const Vector2f Game::GetWindowSize()
 {
+	//std::cout << this->window->getSize().x << " " << this->window->getSize().y << std::endl;
     return static_cast<Vector2f>(this->window->getSize());
 }
 
@@ -68,32 +76,30 @@ void Game::Update()
 {
 	Pollevents();
 
-	if (Mouse::isButtonPressed(Mouse::Button::Left))
+	// Update towers
+	for (size_t t = 0; t < towers.size(); t++)
 	{
-		player.Shoot(GetupdateMousePos(), GetWindowSize(),1);
+		towers[t]->Tower_Update(GetWindowSize());
 	}
-	else
-	{
-		player.Shoot(GetupdateMousePos(), GetWindowSize(),0);
-	}
-
-	if (Keyboard::isKeyPressed(Keyboard::Scancode::W))
-		player.Move('Z');
-	if (Keyboard::isKeyPressed(Keyboard::Scancode::A))
-		player.Move('Q');
-	if (Keyboard::isKeyPressed(Keyboard::Scancode::S))
-		player.Move('S');
-	if (Keyboard::isKeyPressed(Keyboard::Scancode::D))
-		player.Move('D');
-
-	player.Update_Player(window);
 }
 
 void Game::Render()
 {
 	window->clear();
 
-	player.Render_Player(window);
+	// Render Towers
+	for (size_t t = 0; t < towers.size(); t++)
+	{
+		towers[t]->Tower_Render(this->window);
+	}
 
+	// Render Enemies
+	/*
+	for (size_t e = 0; e < entities.size(); e++)
+	{
+		window->draw(*entities[e]->sprite);
+	}*/
+	
+	grid->Grid_Render(this->window);
 	window->display();
 }

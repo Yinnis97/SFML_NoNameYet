@@ -1,7 +1,17 @@
 #pragma once
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
-#include "Player.h"
+#include "Entity.h"
+#include "Boss.h"
+#include "Enemy.h"
+#include "Tower.h"
+#include "Rocket.h"
+#include "Sniper.h"
+#include "Turret.h"
+#include "Grid.h"
+
+#include <iostream>
+#include "math.h"
 
 using namespace sf;
 
@@ -11,8 +21,10 @@ class Game
 private:
 	RenderWindow *window;
 	VideoMode videomode;
-	Player player;
-	Clock clock;
+	std::vector<Entity*> entities;
+	std::vector<Tower*> towers;
+	bool mouseheld;
+	Grid* grid;
 
 public:
 	Game();

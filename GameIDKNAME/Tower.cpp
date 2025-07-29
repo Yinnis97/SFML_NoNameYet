@@ -4,13 +4,13 @@ Tower::~Tower()
 {
 }
 
-void Tower::Tower_Init_Variables(Vector2f pos)
+void Tower::Tower_Init_Variables(Vector2f pos, Vector2f size)
 {
-	shape.setSize({ TOWER_SIZE,TOWER_SIZE });
+	shape.setSize(size);
 	shape.setPosition(pos);
 	shape.setFillColor(Color::Blue);
 	shape.setOutlineColor(Color::Red);
-	center = shape.getPosition() + Vector2f{ TOWER_SIZE_HALF, TOWER_SIZE_HALF };
+	center = shape.getPosition() + Vector2f{ size.x/2, size.y/2 };
 
 	clock.restart();
 }
@@ -34,7 +34,7 @@ void Tower::Tower_Update(Vector2f windowsize)
 	// Move bullets according to speed
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
-		bullets[i].shape.move({ 0,speed });
+		bullets[i].shape.move({ 0,-speed });
 	}
 
 	// Erase bullets when out off screen

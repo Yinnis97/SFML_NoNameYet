@@ -24,6 +24,7 @@
     <ProjectGuid>{fffa536b-a1e5-4e82-8f11-e4057f704a08}</ProjectGuid>
     <RootNamespace>GameIDKNAME</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
+    <ProjectName>Tower_Defense</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">

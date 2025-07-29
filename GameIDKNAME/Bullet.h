@@ -18,7 +18,7 @@ public:
 	{
 		shape.setRadius(radius);
 		shape.setFillColor(Color::Black);
-		shape.setOutlineThickness(2.0);
+		shape.setOutlineThickness(1.0);
 		shape.setOutlineColor(Color::Red);
 		hitenemy = false;
 	}

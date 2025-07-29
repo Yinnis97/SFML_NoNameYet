@@ -19,15 +19,12 @@ void Game::Init_Var()
 void Game::Init_Window()
 {
 	videomode = VideoMode::getDesktopMode();
-	window = new RenderWindow(videomode, "DIKKE GAME", State::Windowed);
+	window = new RenderWindow(videomode, "DIKKE GAME", State::Fullscreen);
 	window->setVerticalSyncEnabled(true);
 
 	grid = new Grid(GetWindowSize());
 	
 	entities.push_back(new Boss);
-	towers.push_back(new Rocket({ 1000,100 }));
-	towers.push_back(new Sniper({ 1500,100 }));
-	towers.push_back(new Turret({ 2000,100 }));
 }
 
 
@@ -76,22 +73,16 @@ void Game::Update()
 {
 	Pollevents();
 
-	// Update towers
-	for (size_t t = 0; t < towers.size(); t++)
-	{
-		towers[t]->Tower_Update(GetWindowSize());
-	}
+
+
+	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
 }
 
 void Game::Render()
 {
 	window->clear();
-
-	// Render Towers
-	for (size_t t = 0; t < towers.size(); t++)
-	{
-		towers[t]->Tower_Render(this->window);
-	}
+	
+	grid->Grid_Render(this->window);
 
 	// Render Enemies
 	/*
@@ -99,7 +90,6 @@ void Game::Render()
 	{
 		window->draw(*entities[e]->sprite);
 	}*/
-	
-	grid->Grid_Render(this->window);
+
 	window->display();
 }

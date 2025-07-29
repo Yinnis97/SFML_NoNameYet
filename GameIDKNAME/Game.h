@@ -4,10 +4,7 @@
 #include "Entity.h"
 #include "Boss.h"
 #include "Enemy.h"
-#include "Tower.h"
-#include "Rocket.h"
-#include "Sniper.h"
-#include "Turret.h"
+
 #include "Grid.h"
 
 #include <iostream>
@@ -22,7 +19,6 @@ private:
 	RenderWindow *window;
 	VideoMode videomode;
 	std::vector<Entity*> entities;
-	std::vector<Tower*> towers;
 	bool mouseheld;
 	Grid* grid;
 

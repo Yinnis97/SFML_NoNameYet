@@ -17,6 +17,10 @@ void Grid::Grid_Init(Vector2f windowsize)
 	grassTexture.loadFromFile("Textures/DonkerGroen.png");
 	waterTexture.loadFromFile("Textures/DonkerBlauw.png");
 	sectionTexture.loadFromFile("Textures/Grijs.png");
+	turretTexture.loadFromFile("Textures/Turret.png");
+	sniperTexture.loadFromFile("Textures/Sniper.png");
+	rocketTexture.loadFromFile("Textures/Rocket.png");
+
 	grassTexture.setRepeated(true);
 	sandTexture.setRepeated(true);
 	waterTexture.setRepeated(true);
@@ -105,18 +109,59 @@ void Grid::Grid_Init(Vector2f windowsize)
 
 	// Building squares
 	float k = 0;
-	for (size_t s = 0; s <= 10; s++)
+	for (size_t s = 0; s <= TOWER_AMOUNT; s++)
 	{
 		buildplot bottom;
 		bottom.build = false;
 		bottom.shape.setFillColor(Color::Yellow);
 		bottom.shape.setOutlineColor(Color::Black);
 		bottom.shape.setOutlineThickness(windowsize.x/1000);
-		bottom.shape.setSize({ windowsize.x/20, windowsize.x/20 });
-		bottom.shape.setPosition({(windowsize.x/40)+k,windowsize.y - (windowsize.y/9)});
+		bottom.shape.setSize({ windowsize.x/TOWER_SIZE, windowsize.x/TOWER_SIZE });
+		bottom.shape.setPosition({(windowsize.x/TOWER_START_POS)+k,windowsize.y - (windowsize.y/9)});
 		buildplots.push_back(bottom);
-		k = k + (windowsize.x / 10);
+		k = k + (windowsize.x / TOWER_SPACE);
 	}
+
+	// Tower Options
+	for (size_t s = 0; s < TOWER_TYPES; s++)
+	{
+		RectangleShape option;
+		option.setOutlineColor(Color::Black);
+		switch (s)
+		{
+		case 0:
+			option.setTexture(&turretTexture);
+			break;
+		case 1:
+			option.setTexture(&rocketTexture);
+			break;
+		case 2:
+			option.setTexture(&sniperTexture);
+			break;
+		case 3:
+			break;
+		default:
+			break;
+		}
+		option.setOutlineThickness(windowsize.x / 1000);
+		option.setSize({ windowsize.x / 50, windowsize.x / 50 });
+		toweroptionsrect.push_back(option);
+	}
+
+
+}
+
+void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index)
+{
+	TowerOptions = true;
+	Index_ = index;
+
+	for (size_t s = 0; s < toweroptionsrect.size(); s++)
+	{
+		toweroptionsrect[s].setPosition({ buildplots[index].shape.getPosition().x + (s * toweroptionsrect[s].getSize().x),
+			buildplots[index].shape.getPosition().y + buildplots[index].shape.getSize().y});
+	}
+
 }
 
 void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
@@ -130,9 +175,37 @@ void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
 			{
 				if (buildplots[m].shape.getGlobalBounds().contains(Mousepos) && (!buildplots[m].build))
 				{
-					// fix so u can pick what tower to build ------
-					towers.push_back(new Turret(buildplots[m].shape.getPosition(), { windowsize.x / 20, windowsize.x / 20 }));
-					buildplots[m].build = true;
+					Grid_SelectTower(Mousepos, windowsize, m);
+				}
+			}
+			if (TowerOptions)
+			{
+				for (size_t m = 0; m < toweroptionsrect.size(); m++)
+				{
+					if (toweroptionsrect[m].getGlobalBounds().contains(Mousepos) && (!buildplots[Index_].build))
+					{
+						switch (m)
+						{
+						case 0:
+							towers.push_back(new Turret(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							buildplots[Index_].build = true;
+							break;
+						case 1:
+							towers.push_back(new Rocket(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							buildplots[Index_].build = true;
+							break;
+						case 2:
+							towers.push_back(new Sniper(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							buildplots[Index_].build = true;
+							break;
+						case 3:
+							break;
+
+						default:
+							break;
+
+						}
+					}
 				}
 			}
 		}
@@ -164,6 +237,15 @@ void Grid::Grid_Render(RenderWindow* window)
 	for (size_t r = 0; r < buildplots.size(); r++)
 	{
 		window->draw(buildplots[r].shape);
+	}
+
+	// Render tower options 
+	if (TowerOptions)
+	{
+		for (size_t t = 0; t < toweroptionsrect.size(); t++)
+		{
+			window->draw(toweroptionsrect[t]);
+		}
 	}
 
 	// Render towers

@@ -12,7 +12,7 @@ public:
 
     void Tower_Init(Vector2f pos, Vector2f size) override
     {
-        if (!texture.loadFromFile("Textures/EyeCharBlue.png"))
+        if (!texture.loadFromFile("Textures/Sniper.png"))
         {
             std::cout << "Error Loading Texture" << std::endl;
         }

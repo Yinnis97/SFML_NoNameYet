@@ -13,10 +13,11 @@ public:
 	float speed;
 	bool hitenemy;
 
-	Bullet(float radius, uint8_t dmg, float spd)
+	Bullet(float radius, Vector2f windowsize, uint8_t dmg, float spd)
 		: speed(spd), damage(dmg)
 	{
-		shape.setRadius(radius);
+
+		shape.setRadius(radius*(windowsize.x/1000));
 		shape.setFillColor(Color::Black);
 		shape.setOutlineThickness(1.0);
 		shape.setOutlineColor(Color::Red);

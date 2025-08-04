@@ -4,6 +4,7 @@ void Enemy::Init()
 {
 	texture.loadFromFile("Textures/EyeCharBlue.png");
 	sprite.emplace(texture);
-	sprite->setScale({ 1, 1 });
-	sprite->setPosition({ 800,1000 });
+	sprite->setScale({ 2, 2 });
+	sprite->setOrigin({ sprite->getLocalBounds().getCenter() });
+	sprite->setPosition({ startpos.x,(startpos.y / 8) + (startpos.y / 16) });
 }

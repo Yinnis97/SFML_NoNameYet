@@ -147,8 +147,6 @@ void Grid::Grid_Init(Vector2f windowsize)
 		option.setSize({ windowsize.x / 50, windowsize.x / 50 });
 		toweroptionsrect.push_back(option);
 	}
-
-
 }
 
 void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index)
@@ -161,7 +159,6 @@ void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index
 		toweroptionsrect[s].setPosition({ buildplots[index].shape.getPosition().x + (s * toweroptionsrect[s].getSize().x),
 			buildplots[index].shape.getPosition().y + buildplots[index].shape.getSize().y});
 	}
-
 }
 
 void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)

@@ -24,7 +24,7 @@ void Game::Init_Window()
 
 	grid = new Grid(GetWindowSize());
 	
-	entities.push_back(new Boss);
+	entities.push_back(new Boss(GetWindowSize()));
 }
 
 
@@ -73,9 +73,12 @@ void Game::Update()
 {
 	Pollevents();
 
-
-
 	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
+
+	for (size_t e = 0; e < entities.size(); e++)
+	{
+		entities[e]->sprite->move({ -(GetWindowSize().x / 3000), 0 });
+	}
 }
 
 void Game::Render()
@@ -85,11 +88,10 @@ void Game::Render()
 	grid->Grid_Render(this->window);
 
 	// Render Enemies
-	/*
 	for (size_t e = 0; e < entities.size(); e++)
 	{
 		window->draw(*entities[e]->sprite);
-	}*/
+	}
 
 	window->display();
 }

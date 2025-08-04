@@ -6,7 +6,7 @@ class Enemy :
 private:
 
 public:
-    Enemy(uint8_t hp = 5, char type = 'E') : Entity(hp, type)
+    Enemy(Vector2f pos, uint8_t hp = 5, char type = 'E') : Entity(pos, hp, type)
     {
         this->Init();
     }

@@ -7,7 +7,7 @@ class Boss :
 private:
 
 public:
-    Boss( uint8_t hp = 10, char type = 'B') : Entity(hp, type)
+    Boss(const Vector2f pos, uint8_t hp = 10, char type = 'B') : Entity(pos, hp, type)
     {
         this->Init();
     }

@@ -13,8 +13,9 @@ private:
 
 public:
 
-	Entity(int hp, char type) : health(hp), ID(type) {}
+	Entity(const Vector2f pos, int hp, char type) : startpos(pos), health(hp), ID(type) {}
 
+	const Vector2f startpos;
 	Texture texture;
 	std::optional<Sprite> sprite;
 
@@ -24,6 +25,7 @@ public:
 	// Getters
 	uint8_t GetHealth();
 	char GetID();
+
 	void TakeDmg(uint8_t dmg);
 
 };

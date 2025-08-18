@@ -6,9 +6,6 @@
 #include "math.h"
 using namespace sf;
 
-#define TOWER_SIZE 150
-#define TOWER_SIZE_HALF TOWER_SIZE/2
-
 class Tower
 {
 private:

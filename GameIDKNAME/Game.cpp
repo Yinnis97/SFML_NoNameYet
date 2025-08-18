@@ -16,6 +16,7 @@ void Game::Init_Var()
 	window = nullptr;
 	mouseheld = false;
 }
+
 void Game::Init_Window()
 {
 	videomode = VideoMode::getDesktopMode();
@@ -26,7 +27,6 @@ void Game::Init_Window()
 	
 	entities.push_back(new Boss(GetWindowSize()));
 }
-
 
 void Game::Init_Background()
 {
@@ -77,7 +77,26 @@ void Game::Update()
 
 	for (size_t e = 0; e < entities.size(); e++)
 	{
-		entities[e]->sprite->move({ -(GetWindowSize().x / 3000), 0 });
+		entities[e]->ChangeDirection(GetWindowSize());
+
+			switch (entities[e]->direction)
+			{
+			case 0:
+				entities[e]->sprite->move({ -(GetWindowSize().x / ENEMY_SPEED), 0 });
+				break;
+			case 1:
+				entities[e]->sprite->move({ 0, (GetWindowSize().x / ENEMY_SPEED) });
+				break;
+			case 2:
+				entities[e]->sprite->move({ 0, -(GetWindowSize().x / ENEMY_SPEED) });
+				break;
+			case 3:
+				entities[e]->sprite->move({ (GetWindowSize().x / ENEMY_SPEED), 0 });
+				break;
+			default:
+				std::cout << "Error Switch case Game::Update -> Entities direction" << std::endl;
+				break;
+			}
 	}
 }
 
@@ -85,6 +104,7 @@ void Game::Render()
 {
 	window->clear();
 	
+	// Render Grid and Towers
 	grid->Grid_Render(this->window);
 
 	// Render Enemies

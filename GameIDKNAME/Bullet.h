@@ -19,7 +19,7 @@ public:
 
 		shape.setRadius(radius*(windowsize.x/1000));
 		shape.setFillColor(Color::Black);
-		shape.setOutlineThickness(1.0);
+		shape.setOutlineThickness(windowsize.x/3000);
 		shape.setOutlineColor(Color::Red);
 		hitenemy = false;
 	}

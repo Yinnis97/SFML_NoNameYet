@@ -12,6 +12,8 @@
 
 using namespace sf;
 
+#define ENEMY_SPEED 1000
+
 class Game
 {
 

@@ -19,13 +19,18 @@ jobs:
     - name: Install CMake
       uses: jwlawson/actions-setup-cmake@v1
 
-    - name: Configure
-      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+    - name: Configure CMake (Win32)
+      run: cmake -B build -A Win32 -DCMAKE_BUILD_TYPE=Release
 
-    - name: Build
+    - name: Build Release
       run: cmake --build build --config Release
 
-    # Package the final folder
+    - name: Configure CMake (Debug)
+      run: cmake -B build-debug -A Win32 -DCMAKE_BUILD_TYPE=Debug
+
+    - name: Build Debug
+      run: cmake --build build-debug --config Debug
+
     - name: Prepare package
       run: |
         mkdir package

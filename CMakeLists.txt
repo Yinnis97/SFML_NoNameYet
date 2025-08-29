@@ -25,10 +25,10 @@ target_link_libraries(TD PRIVATE
     sfml-system
     sfml-audio
     sfml-main-s
-    openal32
     flac
     freetype
     ogg
+	oggd
     vorbis
     vorbisenc
     vorbisfile

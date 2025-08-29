@@ -10,8 +10,6 @@ class Tower
 {
 private:
 	Vector2f center;
-	Vector2f aimDirection;
-	Vector2f aimDirectionNorm;
 	Vector2f direction;
 	Vector2f position;
 	Vector2f size;

@@ -1,0 +1,38 @@
+name: Build TowerDefense
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - name: Checkout repo
+      uses: actions/checkout@v3
+
+    - name: Setup MSVC
+      uses: ilammy/msvc-dev-cmd@v1
+
+    - name: Install CMake
+      uses: jwlawson/actions-setup-cmake@v1
+
+    - name: Configure
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build --config Release
+
+    # Package the final folder
+    - name: Prepare package
+      run: |
+        mkdir package
+        xcopy build\Release\* package\ /E /I /Y
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: TowerDefense-Windows
+        path: package

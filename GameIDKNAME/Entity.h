@@ -14,12 +14,13 @@ private:
 
 public:
 
-	Entity(const Vector2f pos, int hp, char type) : startpos(pos), health(hp), ID(type), direction(0), lastdir(6,false) {}
+	Entity(const Vector2f pos, int hp, char type) : startpos(pos), health(hp), ID(type), direction(0), lastdir(6,false), ms(1000) {}
 
 	const Vector2f startpos;
 	Texture texture;
 	std::optional<Sprite> sprite;
 
+	float ms;
 	size_t direction;
 	std::vector<bool> lastdir;
 
@@ -30,6 +31,6 @@ public:
 
 	void TakeDmg(uint8_t dmg);
 	void ChangeDirection(Vector2f windowsize);
-
+	void MoveEnemy(Vector2f windowsize);
 };
 

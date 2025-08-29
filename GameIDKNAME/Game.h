@@ -23,6 +23,7 @@ private:
 	std::vector<Entity*> entities;
 	bool mouseheld;
 	Grid* grid;
+	Clock clock;
 
 public:
 	Game();
@@ -30,14 +31,13 @@ public:
 
 	void Init_Var();
 	void Init_Window();
-	void Init_Background();
 
 	bool Running();
 
 	void Pollevents();
 	const Vector2f GetWindowSize();
 	const Vector2f GetupdateMousePos();
-
+	void SpawnEnemies();
 	void Update();
 	void Render();
 

@@ -38,11 +38,10 @@ target_link_libraries(TD PRIVATE
 if(WIN32)
     add_custom_command(TARGET TD POST_BUILD
         COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            ${SFML_BIN_DIR}/sfml-graphics-2.dll
-            ${SFML_BIN_DIR}/sfml-window-2.dll
-            ${SFML_BIN_DIR}/sfml-audio-2.dll
-            ${SFML_BIN_DIR}/sfml-system-2.dll
-            ${SFML_BIN_DIR}/openal32.dll
+            ${SRC_DIR}/sfml-graphics-3.dll
+            ${SRC_DIR}/sfml-window-3.dll
+            ${SRC_DIR}/sfml-audio-3.dll
+            ${SRC_DIR}/sfml-system-3.dll
             $<TARGET_FILE_DIR:TD>
     )
 endif()

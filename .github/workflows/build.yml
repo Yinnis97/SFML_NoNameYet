@@ -3,8 +3,7 @@ name: Build TowerDefense
 on:
   push:
     branches: [ master ]
-  release:
-    types: [ created ]
+  pull_request:
 
 jobs:
   build:
@@ -26,17 +25,19 @@ jobs:
     - name: Build Release
       run: cmake --build build --config Release
 
-    - name: Package Release
+    - name: Configure CMake (Debug)
+      run: cmake -B build-debug -A Win32 -DCMAKE_BUILD_TYPE=Debug
+
+    - name: Build Debug
+      run: cmake --build build-debug --config Debug
+
+    - name: Prepare package
       run: |
         mkdir package
         xcopy build\Release\* package\ /E /I /Y
-        powershell Compress-Archive -Path package\* -DestinationPath TowerDefense.zip
 
-    - name: Create GitHub Release
-      uses: ncipollo/release-action@v1
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
       with:
-        tag: ${{ github.ref_name }}
-        name: ${{ github.ref_name }}
-        artifacts: TowerDefense.zip
-        draft: false
-        prerelease: false
+        name: TowerDefense-Windows
+        path: package

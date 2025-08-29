@@ -24,7 +24,7 @@ target_link_libraries(TD PRIVATE
     sfml-window
     sfml-system
     sfml-audio
-    sfml-main
+    sfml-main-s
     openal32
     flac
     freetype

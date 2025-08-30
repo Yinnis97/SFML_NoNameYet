@@ -1,14 +1,14 @@
 #pragma once
+#include <iostream>
+#include "math.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Audio.hpp>
 #include "Entity.h"
 #include "Boss.h"
 #include "Enemy.h"
-
 #include "Grid.h"
+#include "Player.h"
 
-#include <iostream>
-#include "math.h"
 
 using namespace sf;
 
@@ -23,6 +23,7 @@ private:
 	std::vector<Entity*> entities;
 	bool mouseheld;
 	Grid* grid;
+	Player* player;
 	Clock clock;
 
 public:

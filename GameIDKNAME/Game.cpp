@@ -23,6 +23,7 @@ void Game::Init_Window()
 	window->setVerticalSyncEnabled(true);
 
 	grid = new Grid(GetWindowSize());
+	player = new Player(GetWindowSize());
 	clock.restart();
 }
 
@@ -79,13 +80,16 @@ void Game::Update()
 	Pollevents();
 	SpawnEnemies();
 
+	player->Player_Update();
 	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
 
 	for (size_t e = 0; e < entities.size(); e++)
 	{
+		// Move and change direction if necessary
 		entities[e]->ChangeDirection(GetWindowSize());
 		entities[e]->MoveEnemy(GetWindowSize());
 		
+		// Check if entities have been hit by bullets
 		for (size_t i = 0; i < grid->towers.size(); i++)
 		{
 			for (size_t j = 0; j < grid->towers[i]->bullets.size(); j++)
@@ -94,7 +98,7 @@ void Game::Update()
 				{
 					entities.erase(entities.begin() + e);
 					grid->towers[i]->bullets.erase(grid->towers[i]->bullets.begin() + j);
-					std::cout << "delete\n";
+					player->gold = player->gold + 1;
 					break;
 				}
 			}
@@ -106,10 +110,10 @@ void Game::Render()
 {
 	window->clear();
 	
-	// Render Grid and Towers
 	grid->Grid_Render(this->window);
 
-	// Render Enemies
+	player->Player_Render(this->window);
+
 	for (size_t e = 0; e < entities.size(); e++)
 	{
 		window->draw(*entities[e]->sprite);

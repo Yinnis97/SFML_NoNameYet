@@ -1,12 +1,12 @@
 #pragma once
+#include <iostream>
+#include "math.h"
 #include <SFML/Graphics.hpp>
 #include "Tower.h"
 #include "Rocket.h"
 #include "Sniper.h"
 #include "Turret.h"
 
-#include <iostream>
-#include "math.h"
 
 using namespace sf;
 

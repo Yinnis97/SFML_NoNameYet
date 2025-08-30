@@ -25,12 +25,6 @@ jobs:
     - name: Build Release
       run: cmake --build build --config Release
 
-    - name: Configure CMake (Debug)
-      run: cmake -B build-debug -A Win32 -DCMAKE_BUILD_TYPE=Debug
-
-    - name: Build Debug
-      run: cmake --build build-debug --config Debug
-
     - name: Prepare package
       run: |
         mkdir package

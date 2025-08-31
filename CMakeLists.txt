@@ -46,9 +46,16 @@ if(WIN32)
     )
 endif()
 
-# Copy assets
+# Copy assets Textures
 add_custom_command(TARGET TD POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_directory
         ${SRC_DIR}/Textures
         $<TARGET_FILE_DIR:TD>/Textures
+)
+
+# Copy assets Fonts
+add_custom_command(TARGET TD POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${SRC_DIR}/Fonts
+        $<TARGET_FILE_DIR:TD>/Fonts
 )

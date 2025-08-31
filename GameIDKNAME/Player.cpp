@@ -11,6 +11,8 @@ Player::~Player()
 
 void Player::Player_Init(Vector2f windowsize)
 {
+	//Color color(0,44,82,255);
+	
 	gold = 10;
 	silver = 100;
 	copper = 1000;

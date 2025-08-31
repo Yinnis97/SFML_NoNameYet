@@ -39,6 +39,7 @@ public:
 	const Vector2f GetWindowSize();
 	const Vector2f GetupdateMousePos();
 	void SpawnEnemies();
+	void EnemyHitDetection(size_t index);
 	void Update();
 	void Render();
 

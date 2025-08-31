@@ -75,6 +75,41 @@ void Game::SpawnEnemies()
 	}
 }
 
+void Game::EnemyHitDetection(size_t index)
+{
+	// Check if entities have been hit by bullets
+	for (size_t i = 0; i < grid->towers.size(); i++)
+	{
+		for (size_t j = 0; j < grid->towers[i]->bullets.size(); j++)
+		{
+			if (entities[index]->sprite->getGlobalBounds().contains(grid->towers[i]->bullets[j].shape.getPosition()))
+			{
+				entities[index]->TakeDmg(grid->towers[i]->bullets[j].damage);
+				grid->towers[i]->bullets.erase(grid->towers[i]->bullets.begin() + j);
+
+
+				if (entities[index]->GetHealth() <= 0)
+				{
+					switch (entities[index]->GetID())
+					{
+					case 'E':
+						player->gold = player->gold + 1;
+						break;
+					case 'B':
+						player->gold = player->gold + 10;
+						break;
+					default:
+						std::cout << "Error at switch case entities GetID\n";
+						break;
+					}
+					entities.erase(entities.begin() + index);
+				}
+				break;
+			}
+		}
+	}
+}
+
 void Game::Update()
 {
 	Pollevents();
@@ -83,26 +118,12 @@ void Game::Update()
 	player->Player_Update();
 	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
 
-	for (size_t e = 0; e < entities.size(); e++)
+	for (size_t index = 0; index < entities.size(); index++)
 	{
-		// Move and change direction if necessary
-		entities[e]->ChangeDirection(GetWindowSize());
-		entities[e]->MoveEnemy(GetWindowSize());
+		entities[index]->ChangeDirection(GetWindowSize());
+		entities[index]->MoveEnemy(GetWindowSize());
 		
-		// Check if entities have been hit by bullets
-		for (size_t i = 0; i < grid->towers.size(); i++)
-		{
-			for (size_t j = 0; j < grid->towers[i]->bullets.size(); j++)
-			{
-				if (entities[e]->sprite->getGlobalBounds().contains(grid->towers[i]->bullets[j].shape.getPosition()))
-				{
-					entities.erase(entities.begin() + e);
-					grid->towers[i]->bullets.erase(grid->towers[i]->bullets.begin() + j);
-					player->gold = player->gold + 1;
-					break;
-				}
-			}
-		}
+		EnemyHitDetection(index);
 	}
 }
 

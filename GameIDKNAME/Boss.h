@@ -9,14 +9,15 @@ private:
 public:
     Boss(const Vector2f pos, int8_t hp = 10, char type = 'B') : Entity(pos, hp, type)
     {
-        this->Init();
+        this->Init(pos);
     }
 
-    void Init() override
+    void Init(Vector2f pos) override
     {
         texture.loadFromFile("Textures/EyeCharBlue.png");
         sprite.emplace(texture);
-        sprite->setScale({ 2, 2 });
+        auto x = pos.x / 2000;
+        sprite->setScale({ x, x });
         sprite->setOrigin({ sprite->getLocalBounds().getCenter() });
         sprite->setPosition({ startpos.x,(startpos.y / 8) + (startpos.y / 16) });
     }

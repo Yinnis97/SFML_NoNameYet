@@ -24,7 +24,7 @@ public:
 	size_t direction;
 	std::vector<bool> lastdir;
 
-	virtual void Init() = 0;
+	virtual void Init(Vector2f pos) = 0;
 
 	int8_t GetHealth();
 	char GetID();

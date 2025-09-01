@@ -22,6 +22,8 @@ void Game::Init_Window()
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Fullscreen);
 	window->setVerticalSyncEnabled(true);
 
+	srand(time(NULL));
+
 	grid = new Grid(GetWindowSize());
 	player = new Player(GetWindowSize());
 	clock.restart();
@@ -62,20 +64,26 @@ const Vector2f Game::GetupdateMousePos()
 	return window->mapPixelToCoords(Mouse::getPosition(*this->window));
 }
 
-void Game::SpawnEnemies()
+void Game::EntitySpawn()
 {
-	for (size_t i = 0; i < 20; i++)
-	{
-	}
-
 	if (clock.getElapsedTime().asMilliseconds() >= 1000)
 	{
-		entities.push_back(new Boss(GetWindowSize()));
+		uint8_t random = rand() % 100;
+
+		switch (random)
+		{
+		case 100:
+			entities.push_back(new Boss(GetWindowSize()));
+			break;
+		default:
+			entities.push_back(new Enemy(GetWindowSize()));
+			break;
+		}
 		clock.restart();
 	}
 }
 
-void Game::EnemyHitDetection(size_t index)
+void Game::EntityHitDetection(size_t index)
 {
 	// Check if entities have been hit by bullets
 	for (size_t i = 0; i < grid->towers.size(); i++)
@@ -86,8 +94,7 @@ void Game::EnemyHitDetection(size_t index)
 			{
 				entities[index]->TakeDmg(grid->towers[i]->bullets[j].damage);
 				grid->towers[i]->bullets.erase(grid->towers[i]->bullets.begin() + j);
-
-
+				
 				if (entities[index]->GetHealth() <= 0)
 				{
 					switch (entities[index]->GetID())
@@ -110,10 +117,18 @@ void Game::EnemyHitDetection(size_t index)
 	}
 }
 
+void Game::EntityEscaped(size_t index)
+{
+	if (entities[index]->sprite->getPosition().x < 0)
+	{
+		entities.erase(entities.begin() + index);
+	}
+}
+
 void Game::Update()
 {
 	Pollevents();
-	SpawnEnemies();
+	EntitySpawn();
 
 	player->Player_Update();
 	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
@@ -123,7 +138,8 @@ void Game::Update()
 		entities[index]->ChangeDirection(GetWindowSize());
 		entities[index]->MoveEnemy(GetWindowSize());
 		
-		EnemyHitDetection(index);
+		EntityHitDetection(index);
+		EntityEscaped(index);
 	}
 }
 

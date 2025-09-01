@@ -1,7 +1,7 @@
 #include "Entity.h"
 
 
-uint8_t Entity::GetHealth()
+int8_t Entity::GetHealth()
 {
     return this->health;
 }
@@ -11,7 +11,7 @@ char Entity::GetID()
     return this->ID;
 }
 
-void Entity::TakeDmg(uint8_t dmg)
+void Entity::TakeDmg(int8_t dmg)
 {
     this->health = this->health - dmg;
 }
@@ -19,6 +19,7 @@ void Entity::TakeDmg(uint8_t dmg)
 void Entity::ChangeDirection(Vector2f windowsize)
 {
 	// 0 = left , 1 = down , 2 = up, 3 = right
+	// A horrible way of doing this.
 
 	if (sprite->getPosition().x <= (windowsize.x / 2) - (windowsize.y / 16) && !lastdir[0])
 	{

@@ -9,7 +9,7 @@ using namespace sf;
 class Entity
 {
 private:
-	uint8_t health;
+	int8_t health;
 	char ID;
 
 public:
@@ -26,10 +26,10 @@ public:
 
 	virtual void Init() = 0;
 
-	uint8_t GetHealth();
+	int8_t GetHealth();
 	char GetID();
 
-	void TakeDmg(uint8_t dmg);
+	void TakeDmg(int8_t dmg);
 	void ChangeDirection(Vector2f windowsize);
 	void MoveEnemy(Vector2f windowsize);
 };

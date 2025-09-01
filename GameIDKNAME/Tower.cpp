@@ -20,7 +20,7 @@ void Tower::Tower_Shoot(Vector2f windowsize)
 {
 	if (clock.getElapsedTime().asMilliseconds() >= firerate)
 	{
-		bullets.push_back(Bullet(radius, windowsize, 1, 1));
+		bullets.push_back(Bullet(radius, windowsize, damage, speed));
 		float d = bullets.back().shape.getRadius();
 		bullets.back().shape.setPosition({center.x - d,center.y});
 
@@ -32,10 +32,10 @@ void Tower::Tower_Update(Vector2f windowsize)
 {
 	Tower_Shoot(windowsize);
 
-	// Move bullets according to speed
+	// Move bullets according to bullet speed
 	for (size_t i = 0; i < bullets.size(); i++)
 	{
-		bullets[i].shape.move({ 0,-speed });
+		bullets[i].shape.move({ 0,-bullets[i].speed});
 	}
 
 	// Erase bullets when out off screen

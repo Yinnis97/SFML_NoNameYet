@@ -16,6 +16,7 @@ void Player::Player_Init(Vector2f windowsize)
 	gold = 10;
 	silver = 100;
 	copper = 1000;
+	health = 20;
 
 	if (!font.openFromFile("Fonts/PixeloidSans.ttf"))
 	{

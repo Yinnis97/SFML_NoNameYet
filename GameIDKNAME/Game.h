@@ -9,10 +9,7 @@
 #include "Grid.h"
 #include "Player.h"
 
-
 using namespace sf;
-
-#define ENEMY_SPEED 1000
 
 class Game
 {
@@ -25,7 +22,7 @@ private:
 	Grid* grid;
 	Player* player;
 	Clock clock;
-
+	
 public:
 	Game();
 	~Game();
@@ -34,12 +31,15 @@ public:
 	void Init_Window();
 
 	bool Running();
-
 	void Pollevents();
+
 	const Vector2f GetWindowSize();
 	const Vector2f GetupdateMousePos();
-	void SpawnEnemies();
-	void EnemyHitDetection(size_t index);
+
+	void EntitySpawn();
+	void EntityHitDetection(size_t index);
+	void EntityEscaped(size_t index);
+
 	void Update();
 	void Render();
 

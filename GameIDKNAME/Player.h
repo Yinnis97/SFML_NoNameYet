@@ -15,9 +15,10 @@ public:
 	uint32_t gold;
 	uint32_t silver;
 	uint32_t copper;
-	uint8_t health;
+	uint16_t health;
 	Font font;
 
+	std::optional<Text> health_text;
 	std::optional<Text> gold_text;
 	std::optional<Text> silver_text;
 	std::optional<Text> copper_text;

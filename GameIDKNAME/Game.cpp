@@ -122,6 +122,7 @@ void Game::EntityEscaped(size_t index)
 	if (entities[index]->sprite->getPosition().x < 0)
 	{
 		entities.erase(entities.begin() + index);
+		player->health = player->health - 1;
 	}
 }
 
@@ -148,7 +149,6 @@ void Game::Render()
 	window->clear();
 	
 	grid->Grid_Render(this->window);
-
 	player->Player_Render(this->window);
 
 	for (size_t e = 0; e < entities.size(); e++)

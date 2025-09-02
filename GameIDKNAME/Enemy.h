@@ -13,7 +13,7 @@ public:
 
     void Init(Vector2f pos) override
     {
-        texture.loadFromFile("Textures/EyeCharBlue.png");
+        texture.loadFromFile("Textures/Enemy.png");
         sprite.emplace(texture);
         auto x = pos.x / 2000;
         sprite->setScale({ x, x });

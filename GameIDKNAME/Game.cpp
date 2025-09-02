@@ -72,11 +72,13 @@ void Game::EntitySpawn()
 
 		switch (random)
 		{
-		case 100:
+		case 99:
 			entities.push_back(new Boss(GetWindowSize()));
+			std::cout << "Boss " << "Number : " << static_cast <uint16_t>(random) << std::endl;
 			break;
 		default:
 			entities.push_back(new Enemy(GetWindowSize()));
+			std::cout << static_cast <uint16_t>(random)<< std::endl;
 			break;
 		}
 		clock.restart();

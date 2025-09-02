@@ -87,7 +87,7 @@ void Grid::Grid_Init(Vector2f windowsize)
 
 	// Wall GREEN CUBE
 	cube.setTexture(&grassTexture);
-	cube.setSize({ (windowsize.y / 2)+(windowsize.y/32), (windowsize.y / 2)}); // size x needs to be fixed.
+	cube.setSize({ windowsize.x/3, (windowsize.y / 2) }); // size x part goes offscreen but this will do.
 	cube.setPosition({ (windowsize.x / 2) - (windowsize.y / 4) - (windowsize.y / 8),(windowsize.y / 4) });
 	cube.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y / 8) }));
 	cube.setOrigin({ cube.getSize().x,0 }); // Makes it easier to have the same size enemy paths.

@@ -34,7 +34,7 @@ public:
 	void Pollevents();
 
 	const Vector2f GetWindowSize();
-	const Vector2f GetupdateMousePos();
+	const Vector2f GetMousePos();
 
 	void EntitySpawn();
 	void EntityHitDetection(size_t index);

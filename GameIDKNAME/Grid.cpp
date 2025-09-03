@@ -184,15 +184,15 @@ void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
 						switch (m)
 						{
 						case 0:
-							towers.push_back(new Turret(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							towers.push_back(new Turret(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(),windowsize.y / 270));
 							buildplots[Index_].build = true;
 							break;
 						case 1:
-							towers.push_back(new Rocket(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							towers.push_back(new Rocket(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 540));
 							buildplots[Index_].build = true;
 							break;
 						case 2:
-							towers.push_back(new Sniper(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize()));
+							towers.push_back(new Sniper(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 100));
 							buildplots[Index_].build = true;
 							break;
 						case 3:

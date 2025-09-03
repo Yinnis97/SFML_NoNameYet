@@ -59,7 +59,7 @@ const Vector2f Game::GetWindowSize()
     return static_cast<Vector2f>(this->window->getSize());
 }
 
-const Vector2f Game::GetupdateMousePos()
+const Vector2f Game::GetMousePos()
 {
 	return window->mapPixelToCoords(Mouse::getPosition(*this->window));
 }
@@ -134,7 +134,7 @@ void Game::Update()
 	EntitySpawn();
 
 	player->Player_Update();
-	grid->Grid_Update(GetupdateMousePos(),GetWindowSize());
+	grid->Grid_Update(GetMousePos(),GetWindowSize());
 
 	for (size_t index = 0; index < entities.size(); index++)
 	{

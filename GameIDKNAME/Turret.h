@@ -5,7 +5,7 @@ class Turret :
 {
 private:
 public:
-    Turret(Vector2f pos, Vector2f size, char type = 'T', uint32_t rpm = 200, uint8_t dmg = 1, float rds = 1, float speed = 8) : Tower(pos, size, type, rpm, dmg, rds, speed)
+    Turret(Vector2f pos, Vector2f size, float speed, char type = 'T', uint32_t firerate = 500, uint8_t dmg = 1, float rds = 1) : Tower(pos, size, speed, type, firerate, dmg, rds)
     {
         Tower_Init(pos,size);
     }

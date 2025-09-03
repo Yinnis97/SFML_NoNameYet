@@ -26,8 +26,10 @@ public:
 	Texture texture;
 	std::vector<Bullet> bullets;
 
-	Tower(Vector2f pos, Vector2f size, char type, uint32_t rpm, uint8_t dmg, float rds, float spd) :
-		position(pos), size(size), type(type), firerate(rpm), damage(dmg), radius(rds), speed(spd) {}
+	// firerate = in milliseconds 2000 = every 2000 ms a bullet shoots.
+	// spd = window.y / n = speed 
+	Tower(Vector2f pos, Vector2f size, float spd, char type, uint32_t firerate, uint8_t dmg, float rds) :
+		position(pos), size(size), speed(spd), type(type), firerate(firerate), damage(dmg), radius(rds) {}
 
 	~Tower();
 	virtual void Tower_Init(Vector2f pos, Vector2f size) = 0;

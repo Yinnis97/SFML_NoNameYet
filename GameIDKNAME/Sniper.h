@@ -5,7 +5,7 @@ class Sniper :
 {
 private:
 public:
-    Sniper(Vector2f pos, Vector2f size, char type = 'S', uint32_t rpm = 2000, uint8_t dmg = 10, float rds = 3, float speed = 18) : Tower(pos, size, type, rpm, dmg, rds, speed)
+    Sniper(Vector2f pos, Vector2f size, float speed, char type = 'S', uint32_t firerate = 2200, uint8_t dmg = 15, float rds = 3) : Tower(pos, size, speed, type, firerate, dmg, rds)
     {
         Tower_Init(pos,size);
     }

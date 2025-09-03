@@ -16,6 +16,11 @@ void Entity::TakeDmg(int8_t dmg)
     this->health = this->health - dmg;
 }
 
+void Entity::DropLoot()
+{
+	std::cout << "Dropped loot " << ID << std::endl;
+}
+
 void Entity::ChangeDirection(Vector2f windowsize)
 {
 	// 0 = left , 1 = down , 2 = up, 3 = right

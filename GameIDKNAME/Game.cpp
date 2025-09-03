@@ -74,11 +74,9 @@ void Game::EntitySpawn()
 		{
 		case 99:
 			entities.push_back(new Boss(GetWindowSize()));
-			std::cout << "Boss " << "Number : " << static_cast <uint16_t>(random) << std::endl;
 			break;
 		default:
 			entities.push_back(new Enemy(GetWindowSize()));
-			std::cout << static_cast <uint16_t>(random)<< std::endl;
 			break;
 		}
 		clock.restart();
@@ -87,6 +85,8 @@ void Game::EntitySpawn()
 
 void Game::EntityHitDetection(size_t index)
 {
+	bool entityDied = false;
+
 	// Check if entities have been hit by bullets
 	for (size_t i = 0; i < grid->towers.size(); i++)
 	{
@@ -99,23 +99,30 @@ void Game::EntityHitDetection(size_t index)
 				
 				if (entities[index]->GetHealth() <= 0)
 				{
-					switch (entities[index]->GetID())
-					{
-					case 'E':
-						player->gold = player->gold + 1;
-						break;
-					case 'B':
-						player->gold = player->gold + 10;
-						break;
-					default:
-						std::cout << "Error at switch case entities GetID\n";
-						break;
-					}
-					entities.erase(entities.begin() + index);
+					entityDied = true;
 				}
 				break;
 			}
 		}
+	}
+
+	if (entityDied)
+	{
+		switch (entities[index]->GetID())
+		{
+		case 'E':
+			player->copper = player->copper + 1;
+			break;
+		case 'B':
+			player->gold = player->gold + 1;
+			break;
+		default:
+			std::cout << "Error at switch case entities GetID\n";
+			break;
+		}
+
+		entities[index]->DropLoot();
+		entities.erase(entities.begin() + index);
 	}
 }
 
@@ -133,15 +140,19 @@ void Game::Update()
 	Pollevents();
 	EntitySpawn();
 
-	player->Player_Update();
+	player->Player_Update(GetWindowSize());
 	grid->Grid_Update(GetMousePos(),GetWindowSize());
 
 	for (size_t index = 0; index < entities.size(); index++)
 	{
 		entities[index]->ChangeDirection(GetWindowSize());
 		entities[index]->MoveEnemy(GetWindowSize());
-		
+
 		EntityHitDetection(index);
+	}
+
+	for (size_t index = 0; index < entities.size(); index++)
+	{
 		EntityEscaped(index);
 	}
 }

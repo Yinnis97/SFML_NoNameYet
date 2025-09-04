@@ -100,21 +100,21 @@ void Entity::ChangeDirection(Vector2f windowsize)
 
 }
 
-void Entity::MoveEnemy(Vector2f windowsize)
+void Entity::MoveEnemy(Vector2f windowsize,float dt)
 {
 	switch (direction)
 	{
 	case 0:
-		sprite->move({ -(windowsize.x / ms), 0 });
+		sprite->move({ -(windowsize.x / ms)*dt, 0 });
 		break;
 	case 1:
-		sprite->move({ 0, (windowsize.x / ms) });
+		sprite->move({ 0, (windowsize.x / ms)*dt });
 		break;
 	case 2:
-		sprite->move({ 0, -(windowsize.x / ms) });
+		sprite->move({ 0, -(windowsize.x / ms)*dt });
 		break;
 	case 3:
-		sprite->move({ (windowsize.x / ms), 0 });
+		sprite->move({ (windowsize.x / ms)*dt, 0 });
 		break;
 	default:
 		std::cout << "Error Switch case Game::Update -> Entities direction" << std::endl;

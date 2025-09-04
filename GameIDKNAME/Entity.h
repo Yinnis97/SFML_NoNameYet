@@ -14,7 +14,7 @@ private:
 
 public:
 
-	Entity(const Vector2f pos, int hp, char type) : startpos(pos), health(hp), ID(type), direction(0), lastdir(6,false), ms(1000) {}
+	Entity(const Vector2f pos, int hp, char type) : startpos(pos), health(hp), ID(type), direction(0), lastdir(6,false), ms(10) {}
 
 	const Vector2f startpos;
 	Texture texture;
@@ -32,6 +32,6 @@ public:
 	void TakeDmg(int8_t dmg);
 	Vector2u DropLoot();
 	void ChangeDirection(Vector2f windowsize);
-	void MoveEnemy(Vector2f windowsize);
+	void MoveEnemy(Vector2f windowsize, float dt);
 };
 

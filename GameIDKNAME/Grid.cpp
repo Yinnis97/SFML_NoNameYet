@@ -161,7 +161,7 @@ void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index
 	}
 }
 
-void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
+void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize, float dt)
 {
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
@@ -184,15 +184,15 @@ void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
 						switch (m)
 						{
 						case 0:
-							towers.push_back(new Turret(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(),windowsize.y / 270));
+							towers.push_back(new Turret(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(),windowsize.y / 3));
 							buildplots[Index_].build = true;
 							break;
 						case 1:
-							towers.push_back(new Rocket(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 540));
+							towers.push_back(new Rocket(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 5));
 							buildplots[Index_].build = true;
 							break;
 						case 2:
-							towers.push_back(new Sniper(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 100));
+							towers.push_back(new Sniper(buildplots[Index_].shape.getPosition(), buildplots[Index_].shape.getSize(), windowsize.y / 0.5));
 							buildplots[Index_].build = true;
 							break;
 						case 3:
@@ -215,7 +215,7 @@ void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize)
 	// Update towers
 	for (size_t t = 0; t < towers.size(); t++)
 	{
-		towers[t]->Tower_Update(windowsize);
+		towers[t]->Tower_Update(windowsize,dt);
 	}
 }
 

@@ -66,7 +66,7 @@ public:
 
 	void Grid_Init(Vector2f windowsize);
 	void Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index);
-	void Grid_Update(Vector2f Mousepos, Vector2f windowsize);
+	void Grid_Update(Vector2f Mousepos, Vector2f windowsize, float dt);
 	void Grid_Render(RenderWindow* window);
 };
 

@@ -36,6 +36,6 @@ public:
 
 	void Tower_Init_Variables(Vector2f pos, Vector2f size);
 	void Tower_Shoot(Vector2f windowsize);
-	void Tower_Update(Vector2f windowsize);
+	void Tower_Update(Vector2f windowsize, float dt);
 	void Tower_Render(RenderWindow* window);
 };

@@ -25,7 +25,10 @@ private:
 	Player* player;
 	Menu* menu;
 	Clock clock;
-	
+
+	Clock dt_clock;
+	float dt;
+
 public:
 	Game();
 	~Game();
@@ -36,6 +39,7 @@ public:
 
 	bool Running();
 	void Pollevents();
+	void UpdateDeltaTime();
 
 	const Vector2f GetWindowSize();
 	const Vector2f GetMousePos();

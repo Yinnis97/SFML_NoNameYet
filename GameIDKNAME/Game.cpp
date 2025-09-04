@@ -16,6 +16,7 @@ void Game::Init_Var()
 	window = nullptr;
 	mouseheld = false;
 	inMenu = true;
+	dt = dt_clock.restart().asSeconds();
 }
 
 void Game::Init_Window()
@@ -23,6 +24,7 @@ void Game::Init_Window()
 	videomode = VideoMode::getDesktopMode();
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Fullscreen);
 	window->setVerticalSyncEnabled(true);
+	//window->setFramerateLimit(60);
 
 	menu = new Menu(GetWindowSize());
 }
@@ -61,6 +63,11 @@ void Game::Pollevents()
 			}
 		}
 	}
+}
+
+void Game::UpdateDeltaTime()
+{
+	dt = dt_clock.restart().asSeconds();
 }
 
 const Vector2f Game::GetWindowSize()
@@ -147,6 +154,7 @@ void Game::EntityEscaped(size_t index)
 
 void Game::Update()
 {
+	UpdateDeltaTime();
 	Pollevents();
 
 	if (inMenu)
@@ -158,12 +166,12 @@ void Game::Update()
 		EntitySpawn();
 
 		player->Player_Update(GetWindowSize());
-		grid->Grid_Update(GetMousePos(), GetWindowSize());
+		grid->Grid_Update(GetMousePos(), GetWindowSize(), dt);
 
 		for (size_t index = 0; index < entities.size(); index++)
 		{
 			entities[index]->ChangeDirection(GetWindowSize());
-			entities[index]->MoveEnemy(GetWindowSize());
+			entities[index]->MoveEnemy(GetWindowSize(),dt);
 
 			EntityHitDetection(index);
 		}

@@ -20,14 +20,15 @@ private:
 	VideoMode videomode;
 	std::vector<Entity*> entities;
 	bool mouseheld;
-	
+	float spawninterval;
+
 	Grid* grid;
 	Player* player;
 	Menu* menu;
-	Clock clock;
 
 	Clock dt_clock;
 	float dt;
+
 
 public:
 

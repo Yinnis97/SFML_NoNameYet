@@ -18,7 +18,7 @@ public:
         sprite.emplace(texture);
         auto x = pos.x / 2000;
         sprite->setScale({ x, x });
-        sprite->setOrigin({ sprite->getLocalBounds().getCenter() });
+        sprite->setOrigin({ sprite->getGlobalBounds().getCenter() });
         sprite->setPosition({ startpos.x,(startpos.y / 8) + (startpos.y / 16) });
     }
 };

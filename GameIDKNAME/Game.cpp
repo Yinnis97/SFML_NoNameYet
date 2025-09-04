@@ -16,6 +16,7 @@ void Game::Init_Var()
 	window = nullptr;
 	mouseheld = false;
 	inMenu = true;
+	spawninterval = 0.0f;
 	dt = dt_clock.restart().asSeconds();
 }
 
@@ -33,7 +34,6 @@ void Game::Init_Game()
 	srand(time(NULL));
 	grid = new Grid(GetWindowSize());
 	player = new Player(GetWindowSize());
-	clock.restart();
 }
 
 bool Game::Running()
@@ -55,9 +55,6 @@ void Game::Pollevents()
 			{
 			case Keyboard::Scancode::Escape:
 				window->close();
-				break;
-			case Keyboard::Scancode::B:
-				inMenu = false;
 				break;
 			}
 		}
@@ -81,8 +78,9 @@ const Vector2f Game::GetMousePos()
 
 void Game::EntitySpawn()
 {
-	// Still needs to be fixed using dt and not use a clock.
-	if (clock.getElapsedTime().asMilliseconds() >= 1000)
+	spawninterval += dt;
+
+	if (spawninterval >= 1.0)
 	{
 		uint8_t random = rand() % 100;
 
@@ -95,7 +93,7 @@ void Game::EntitySpawn()
 			entities.push_back(new Enemy(GetWindowSize()));
 			break;
 		}
-		clock.restart();
+		spawninterval = 0.0f;
 	}
 }
 

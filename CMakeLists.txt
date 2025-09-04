@@ -59,3 +59,10 @@ add_custom_command(TARGET TD POST_BUILD
         ${SRC_DIR}/Fonts
         $<TARGET_FILE_DIR:TD>/Fonts
 )
+
+# Copy assets Shaders
+add_custom_command(TARGET TD POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${SRC_DIR}/Shaders
+        $<TARGET_FILE_DIR:TD>/Shaders
+)

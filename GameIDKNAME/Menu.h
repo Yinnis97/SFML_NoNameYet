@@ -10,11 +10,15 @@ class Menu
 {
 private:
 
-	//std::optional<Text> header_text;
-	//std::optional<Text> load_game_text;
-	//std::optional<Text> credits_text;
+	bool mousepressed;
+
+	std::optional<Text> header_text;
+	std::optional<Text> load_game_text;
+	std::optional<Text> credits_text;
+	std::optional<Text> start_text;
 
 	RectangleShape background;
+	RectangleShape startbutton;
 
 	Texture background_texture;
 
@@ -27,7 +31,7 @@ public:
 	void Menu_SaveGame();
 	void Menu_LoadGame();
 
-	void Menu_Update(Vector2f windowsize);
+	void Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu);
 	void Menu_Render(RenderWindow* window);
 };
 

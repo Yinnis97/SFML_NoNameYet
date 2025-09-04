@@ -24,7 +24,6 @@ void Game::Init_Window()
 	videomode = VideoMode::getDesktopMode();
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Fullscreen);
 	window->setVerticalSyncEnabled(true);
-	//window->setFramerateLimit(60);
 
 	menu = new Menu(GetWindowSize());
 }
@@ -82,6 +81,7 @@ const Vector2f Game::GetMousePos()
 
 void Game::EntitySpawn()
 {
+	// Still needs to be fixed using dt and not use a clock.
 	if (clock.getElapsedTime().asMilliseconds() >= 1000)
 	{
 		uint8_t random = rand() % 100;
@@ -159,7 +159,7 @@ void Game::Update()
 
 	if (inMenu)
 	{
-		menu->Menu_Update(GetWindowSize());
+		menu->Menu_Update(GetMousePos(), GetWindowSize(),&inMenu);
 	}
 	else
 	{

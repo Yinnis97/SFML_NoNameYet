@@ -12,25 +12,28 @@ void Tower::Tower_Init_Variables(Vector2f pos, Vector2f size)
 	//shape.setOutlineColor(Color::Red);
 	shape.setTexture(&texture);
 	center = shape.getPosition() + Vector2f{ size.x/2, size.y/2 };
+	lastshot = 0.0f;
 
 	clock.restart();
 }
 
-void Tower::Tower_Shoot(Vector2f windowsize)
+void Tower::Tower_Shoot(Vector2f windowsize, float dt)
 {
-	if (clock.getElapsedTime().asMilliseconds() >= firerate)
+	lastshot += dt;
+
+	if (lastshot >= firerate)
 	{
 		bullets.push_back(Bullet(radius, windowsize, damage, speed));
 		float d = bullets.back().shape.getRadius();
 		bullets.back().shape.setPosition({center.x - d,center.y});
 
-		clock.restart();
+		lastshot = 0.0f;
 	}
 }
 
 void Tower::Tower_Update(Vector2f windowsize, float dt)
 {
-	Tower_Shoot(windowsize);
+	Tower_Shoot(windowsize, dt);
 
 	// Move bullets according to bullet speed
 	for (size_t i = 0; i < bullets.size(); i++)

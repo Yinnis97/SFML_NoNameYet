@@ -20,7 +20,7 @@ private:
 	VideoMode videomode;
 	std::vector<Entity*> entities;
 	bool mouseheld;
-	bool inMenu;
+	
 	Grid* grid;
 	Player* player;
 	Menu* menu;
@@ -30,6 +30,9 @@ private:
 	float dt;
 
 public:
+
+	bool inMenu;
+
 	Game();
 	~Game();
 

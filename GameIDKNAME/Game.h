@@ -8,6 +8,7 @@
 #include "Enemy.h"
 #include "Grid.h"
 #include "Player.h"
+#include "Menu.h"
 
 using namespace sf;
 
@@ -19,8 +20,10 @@ private:
 	VideoMode videomode;
 	std::vector<Entity*> entities;
 	bool mouseheld;
+	bool inMenu;
 	Grid* grid;
 	Player* player;
+	Menu* menu;
 	Clock clock;
 	
 public:
@@ -29,6 +32,7 @@ public:
 
 	void Init_Var();
 	void Init_Window();
+	void Init_Game();
 
 	bool Running();
 	void Pollevents();

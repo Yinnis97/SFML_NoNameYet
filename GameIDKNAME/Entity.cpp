@@ -54,6 +54,7 @@ Vector2u Entity::DropLoot()
 			std::cout << "Dropped Blue sapphire, number: " << random << "    Amount: " << static_cast<uint16_t>(amount) << std::endl;
 			return { 1,amount };
 		}
+		return { 0,0 };
 	}
 	else
 	{

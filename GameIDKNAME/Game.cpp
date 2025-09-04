@@ -4,6 +4,7 @@ Game::Game()
 {
 	Init_Var();
 	Init_Window();
+	Init_Game();
 }
 
 Game::~Game()
@@ -14,6 +15,7 @@ void Game::Init_Var()
 {
 	window = nullptr;
 	mouseheld = false;
+	inMenu = true;
 }
 
 void Game::Init_Window()
@@ -22,8 +24,12 @@ void Game::Init_Window()
 	window = new RenderWindow(videomode, "DIKKE GAME", State::Fullscreen);
 	window->setVerticalSyncEnabled(true);
 
-	srand(time(NULL));
+	menu = new Menu(GetWindowSize());
+}
 
+void Game::Init_Game()
+{
+	srand(time(NULL));
 	grid = new Grid(GetWindowSize());
 	player = new Player(GetWindowSize());
 	clock.restart();
@@ -48,6 +54,9 @@ void Game::Pollevents()
 			{
 			case Keyboard::Scancode::Escape:
 				window->close();
+				break;
+			case Keyboard::Scancode::B:
+				inMenu = false;
 				break;
 			}
 		}
@@ -139,35 +148,50 @@ void Game::EntityEscaped(size_t index)
 void Game::Update()
 {
 	Pollevents();
-	EntitySpawn();
 
-	player->Player_Update(GetWindowSize());
-	grid->Grid_Update(GetMousePos(),GetWindowSize());
-
-	for (size_t index = 0; index < entities.size(); index++)
+	if (inMenu)
 	{
-		entities[index]->ChangeDirection(GetWindowSize());
-		entities[index]->MoveEnemy(GetWindowSize());
-
-		EntityHitDetection(index);
+		menu->Menu_Update(GetWindowSize());
 	}
-
-	for (size_t index = 0; index < entities.size(); index++)
+	else
 	{
-		EntityEscaped(index);
+		EntitySpawn();
+
+		player->Player_Update(GetWindowSize());
+		grid->Grid_Update(GetMousePos(), GetWindowSize());
+
+		for (size_t index = 0; index < entities.size(); index++)
+		{
+			entities[index]->ChangeDirection(GetWindowSize());
+			entities[index]->MoveEnemy(GetWindowSize());
+
+			EntityHitDetection(index);
+		}
+
+		for (size_t index = 0; index < entities.size(); index++)
+		{
+			EntityEscaped(index);
+		}
 	}
 }
 
 void Game::Render()
 {
 	window->clear();
-	
-	grid->Grid_Render(this->window);
-	player->Player_Render(this->window);
 
-	for (size_t e = 0; e < entities.size(); e++)
+	if (inMenu)
 	{
-		window->draw(*entities[e]->sprite);
+		menu->Menu_Render(this->window);
+	}
+	else
+	{
+		grid->Grid_Render(this->window);
+		player->Player_Render(this->window);
+
+		for (size_t e = 0; e < entities.size(); e++)
+		{
+			window->draw(*entities[e]->sprite);
+		}
 	}
 
 	window->display();

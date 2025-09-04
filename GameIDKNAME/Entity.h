@@ -30,7 +30,7 @@ public:
 	char GetID();
 
 	void TakeDmg(int8_t dmg);
-	void DropLoot();
+	Vector2u DropLoot();
 	void ChangeDirection(Vector2f windowsize);
 	void MoveEnemy(Vector2f windowsize);
 };

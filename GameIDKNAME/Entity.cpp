@@ -16,9 +16,49 @@ void Entity::TakeDmg(int8_t dmg)
     this->health = this->health - dmg;
 }
 
-void Entity::DropLoot()
+Vector2u Entity::DropLoot()
 {
-	std::cout << "Dropped loot " << ID << std::endl;
+
+
+	if (ID == 'E')
+	{
+		uint16_t random = rand() % 10000;
+
+		if(random <= 100)
+		{
+			uint8_t amount = (rand() % 10) + 1;
+			std::cout << "Dropped Green sapphire, number: " << random << "     Amount: " << static_cast<uint16_t>(amount) << std::endl;
+			return { 2,amount };
+		}
+		else if (random <= 600)
+		{
+			uint8_t amount = (rand() % 10) + 1;
+			std::cout << "Dropped Yellow sapphire, number: " << random << "     Amount: " << static_cast<uint16_t>(amount) << std::endl;
+			return { 3,amount };
+		}
+		else if (random <= 2600)
+		{
+			uint8_t amount = (rand() % 10) + 1;
+			std::cout << "Dropped Orange sapphire, number: " << random << "     Amount: " << static_cast<uint16_t>(amount) << std::endl;
+			return { 4,amount };
+		}
+
+		return { 0,0 };
+	}
+	else if (ID == 'B')
+	{
+		uint8_t random = rand() % 100;
+		if (random <= 10)
+		{
+			uint8_t amount = (rand() % 10) + 1;
+			std::cout << "Dropped Blue sapphire, number: " << random << "    Amount: " << static_cast<uint16_t>(amount) << std::endl;
+			return { 1,amount };
+		}
+	}
+	else
+	{
+		std::cout << "Error Entity::DropLoot" << std::endl;
+	}
 }
 
 void Entity::ChangeDirection(Vector2f windowsize)

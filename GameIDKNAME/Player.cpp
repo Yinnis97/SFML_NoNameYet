@@ -87,6 +87,25 @@ void Player::Player_Init(Vector2f windowsize)
 	orange_sapphire_text->setString("");
 }
 
+void Player::Player_Proccess_Loot(Vector2u loot)
+{
+	switch (loot.x)
+	{
+	case 1:
+		blue_sapphire = blue_sapphire + loot.y;
+		break;
+	case 2:
+		green_sapphire = green_sapphire + loot.y;
+		break;
+	case 3:
+		yellow_sapphire = yellow_sapphire + loot.y;
+		break;
+	case 4:
+		orange_sapphire = orange_sapphire + loot.y;
+		break;
+	}
+}
+
 void Player::Player_Update(Vector2f windowsize)
 {
 	std::stringstream ss_gold, ss_silver, ss_copper, ss_health, ss_b_sapphire, ss_g_sapphire, ss_y_sapphire, ss_o_sapphire; 

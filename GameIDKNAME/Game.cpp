@@ -121,7 +121,8 @@ void Game::EntityHitDetection(size_t index)
 			break;
 		}
 
-		entities[index]->DropLoot();
+		player->Player_Proccess_Loot(entities[index]->DropLoot());
+
 		entities.erase(entities.begin() + index);
 	}
 }

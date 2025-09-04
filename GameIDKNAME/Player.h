@@ -40,6 +40,8 @@ public:
 
 	void Player_Init(Vector2f windowsize);
 
+	void Player_Proccess_Loot(Vector2u loot);
+
 	void Player_Update(Vector2f windowsize);
 	void Player_Render(RenderWindow* window);
 };

@@ -18,8 +18,6 @@ void Entity::TakeDmg(int8_t dmg)
 
 Vector2u Entity::DropLoot()
 {
-
-
 	if (ID == 'E')
 	{
 		uint16_t random = rand() % 10000;
@@ -67,7 +65,7 @@ void Entity::ChangeDirection(Vector2f windowsize)
 	// 0 = left , 1 = down , 2 = up, 3 = right
 	// A horrible way of doing this.
 
-	if (sprite->getPosition().x <= (windowsize.x / 2) - (windowsize.y / 16) && !lastdir[0])
+	if ((sprite->getPosition().x) <= (windowsize.x / 2) - (windowsize.y / 16) && !lastdir[0])
 	{
 		direction = 1;
 		lastdir[0] = true;

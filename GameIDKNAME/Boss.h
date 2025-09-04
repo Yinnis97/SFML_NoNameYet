@@ -17,9 +17,9 @@ public:
         texture.loadFromFile("Textures/EyeCharBlue.png");
         sprite.emplace(texture);
         auto x = pos.x / 2000;
-        sprite->setScale({ x, x });
         sprite->setOrigin({ sprite->getGlobalBounds().getCenter() });
-        sprite->setPosition({ startpos.x,(startpos.y / 8) + (startpos.y / 16) });
+        sprite->setScale({ x, x });
+        sprite->setPosition({ startpos.x,((startpos.y / 8) + (startpos.y / 16)) });
     }
 };
 

@@ -4,6 +4,7 @@ Grid::Grid(Vector2f windowsize)
 {
 	Grid_Init(windowsize);
 	mousepressed = false;
+	shaderclock.restart();
 }
 
 Grid::~Grid()
@@ -12,97 +13,66 @@ Grid::~Grid()
 
 void Grid::Grid_Init(Vector2f windowsize)
 {
+	// Load Shaders
+	sandshader.loadFromFile("Shaders/path.frag",Shader::Type::Fragment);
+	sandshader.setUniform("resolution", windowsize);
+	grassshader.loadFromFile("Shaders/buildarea.frag", Shader::Type::Fragment);
+	grassshader.setUniform("resolution", windowsize);
+	towerplotshader.loadFromFile("Shaders/buildings.frag", Shader::Type::Fragment);
+	towerplotshader.setUniform("resolution", windowsize);
+	bottomsectionshader.loadFromFile("Shaders/buildarea.frag", Shader::Type::Fragment);
+	bottomsectionshader.setUniform("resolution", windowsize);
+
 	// Load Textures
-	sandTexture.loadFromFile("Textures/DonkerGeel.png");
-	grassTexture.loadFromFile("Textures/DonkerGroen.png");
-	waterTexture.loadFromFile("Textures/DonkerBlauw.png");
-	sectionTexture.loadFromFile("Textures/Grijs.png");
 	turretTexture.loadFromFile("Textures/Turret.png");
 	sniperTexture.loadFromFile("Textures/Sniper.png");
 	rocketTexture.loadFromFile("Textures/Rocket.png");
 
-	grassTexture.setRepeated(true);
-	sandTexture.setRepeated(true);
-	waterTexture.setRepeated(true);
-	sectionTexture.setRepeated(true);
 
-	// Background YELLOW
-	sand.setTexture(&sandTexture);
+	// Background sandish
+	sand.setFillColor(Color::White);
 	sand.setSize(windowsize);
-	sand.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y) }));
 	
 	// Wall GREEN TOP
-	top.setTexture(&grassTexture);
 	top.setSize({ windowsize.x,  windowsize.y / 8 });
-	top.setPosition({ 0,0});
-	top.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y / 8) }));
-	top.setOutlineColor(Color::Black);
-	top.setOutlineThickness(LINETHICKNESS);
+	top.setPosition({ 0,0 });
 	backgroundshapes.push_back(top);
 
 	// Wall GREEN HORIZONTAL SECOND
-	second.setTexture(&grassTexture);
 	second.setSize({ windowsize.x / 2,  windowsize.y / 8 });
 	second.setPosition({ windowsize.x / 2,windowsize.y /4}); 
-	second.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x / 2), static_cast<int>(windowsize.y / 8) }));
-	second.setOutlineColor(Color::Black);
-	second.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(second);
 
 	// Wall GREEN HORIZONTAL THIRD
-	third.setTexture(&grassTexture);
 	third.setSize({ windowsize.x / 2 - (windowsize.y / 8),  windowsize.y / 8});
 	third.setPosition({ windowsize.x / 2 - (windowsize.y / 8),windowsize.y / 2});
-	third.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x / 2 - (windowsize.y / 8)), static_cast<int>(windowsize.y / 8) }));
-	third.setOutlineColor(Color::Black);
-	third.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(third);
 
 	// Wall GREEN VERTICAL MIDDLE
-	vertmid.setTexture(&grassTexture);
 	vertmid.setSize({ windowsize.y / 8,  windowsize.y / 2 });
 	vertmid.setPosition({ (windowsize.x / 2) - (windowsize.y/4),windowsize.y / 8 });
-	vertmid.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.y / 8), static_cast<int>(windowsize.y/2) }));
-	vertmid.setOutlineColor(Color::Black);
-	vertmid.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(vertmid);
 
 	// Wall GREEN VERTICAL RIGHT
-	vertright.setTexture(&grassTexture);
 	vertright.setSize({ windowsize.y / 8,  windowsize.y/2 - (windowsize.y/8)}); 
 	vertright.setPosition({ (windowsize.x - (windowsize.y/8)),(windowsize.y / 2)-(windowsize.y /8)});
-	vertright.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.y / 8), static_cast<int>((windowsize.y/2) + (windowsize.y / 8)) }));
-	vertright.setOutlineColor(Color::Black);
-	vertright.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(vertright);
 
 	// Wall GREEN BOTTOM
-	bottom.setTexture(&grassTexture);
 	bottom.setSize({ windowsize.x,  windowsize.y/8 });
 	bottom.setPosition({0, windowsize.y / 2 + (windowsize.y / 4) });
-	bottom.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y/8) }));
-	bottom.setOutlineColor(Color::Black);
-	bottom.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(bottom);
 
 	// Wall GREEN CUBE
-	cube.setTexture(&grassTexture);
 	cube.setSize({ windowsize.x/3, (windowsize.y / 2) }); // size x part goes offscreen but this will do.
 	cube.setPosition({ (windowsize.x / 2) - (windowsize.y / 4) - (windowsize.y / 8),(windowsize.y / 4) });
-	cube.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y / 8) }));
 	cube.setOrigin({ cube.getSize().x,0 }); // Makes it easier to have the same size enemy paths.
-	cube.setOutlineColor(Color::Black);
-	cube.setOutlineThickness(LINETHICKNESS);
 	backgroundshapes.push_back(cube);
 
 	// BOTTOM SECTION
-	section.setTexture(&sectionTexture);
 	section.setSize({ windowsize.x, windowsize.y / 8 }); 
 	section.setPosition({ 0, bottom.getPosition().y + (windowsize.y /8)});
-	section.setTextureRect(IntRect({ 0, 0 }, { static_cast<int>(windowsize.x), static_cast<int>(windowsize.y / 8) }));
-	section.setOutlineColor(Color::Black);
-	section.setOutlineThickness(LINETHICKNESS);
-	backgroundshapes.push_back(section);
+
 
 	buildplot bottom;
 	buildplots.push_back(bottom);
@@ -161,8 +131,19 @@ void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index
 	}
 }
 
+void Grid::Grid_UpdateShaders()
+{
+	float time = shaderclock.getElapsedTime().asSeconds();
+	sandshader.setUniform("time", time);
+	grassshader.setUniform("time", time);
+	towerplotshader.setUniform("time", time);
+	bottomsectionshader.setUniform("time", time);
+}
+
 void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize, float dt)
 {
+	Grid_UpdateShaders();
+
 	if (Mouse::isButtonPressed(Mouse::Button::Left))
 	{
 		if (!mousepressed)
@@ -222,18 +203,21 @@ void Grid::Grid_Update(Vector2f Mousepos,Vector2f windowsize, float dt)
 void Grid::Grid_Render(RenderWindow* window)
 {
 	// Render yellow background 
-	window->draw(sand);
+	window->draw(sand,&sandshader);
 
 	// Render green areas
 	for (size_t r = 0; r < backgroundshapes.size(); r++)
 	{
-		window->draw(backgroundshapes[r]);
+		window->draw(backgroundshapes[r],&grassshader);
 	}
+
+	// Bottom section
+	window->draw(section, &bottomsectionshader);
 
 	// Render construction sites
 	for (size_t r = 0; r < buildplots.size(); r++)
 	{
-		window->draw(buildplots[r].shape);
+		window->draw(buildplots[r].shape, &towerplotshader);
 	}
 
 	// Render tower options 

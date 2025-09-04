@@ -7,10 +7,8 @@
 #include "Sniper.h"
 #include "Turret.h"
 
-
 using namespace sf;
 
-#define LINETHICKNESS		0
 #define TOWER_AMOUNT		15
 #define TOWER_SIZE			30
 #define TOWER_START_POS		50
@@ -23,8 +21,6 @@ typedef struct
 	bool build;
 	char type;
 }buildplot;
-
-
 
 class Grid
 {
@@ -50,10 +46,6 @@ public:
 	RectangleShape sand;
 	RectangleShape water;
 
-	Texture sandTexture;
-	Texture grassTexture;
-	Texture waterTexture;
-	Texture sectionTexture;
 	Texture turretTexture;
 	Texture sniperTexture;
 	Texture rocketTexture;
@@ -61,11 +53,19 @@ public:
 	bool TowerOptions;
 	size_t Index_;
 
+	Clock shaderclock;
+
+	Shader sandshader;
+	Shader grassshader;
+	Shader towerplotshader;
+	Shader bottomsectionshader;
+
 	Grid(Vector2f windowsize);
 	~Grid();
 
 	void Grid_Init(Vector2f windowsize);
 	void Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index);
+	void Grid_UpdateShaders();
 	void Grid_Update(Vector2f Mousepos, Vector2f windowsize, float dt);
 	void Grid_Render(RenderWindow* window);
 };

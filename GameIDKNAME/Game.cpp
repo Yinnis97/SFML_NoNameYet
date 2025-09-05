@@ -58,6 +58,13 @@ void Game::Pollevents()
 				SaveGame();
 				window->close();
 				break;
+			case Keyboard::Scancode::P:
+				if (!inMenu)
+				{
+					SaveGame();
+					inMenu = true;
+				}
+				break;
 			}
 		}
 	}

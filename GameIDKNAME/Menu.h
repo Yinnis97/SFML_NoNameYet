@@ -13,21 +13,34 @@ private:
 	bool mousepressed;
 
 	std::optional<Text> header_text;
-	std::optional<Text> load_game_text;
+	std::optional<Text> load_text;
 	std::optional<Text> credits_text;
 	std::optional<Text> start_text;
 
 	RectangleShape background;
 	RectangleShape startbutton;
+	RectangleShape loadbutton;
+	RectangleShape creditsbutton;
 
-	Texture background_texture;
+	Shader backgroundShader;
+
+	Font font;
+	Clock shaderClock;
+
+	Color* blue_green_color;
+	Color* dark_gray_color;
+	Color* light_gray_color;
+
+	bool startpressed;
+	bool loadpressed;
+	bool creditspressed;
 
 public:
 	Menu(Vector2f windowsize);
 	~Menu();
 
 	void Menu_Init(Vector2f windowsize);
-
+	
 	void Menu_SaveGame();
 	void Menu_LoadGame();
 

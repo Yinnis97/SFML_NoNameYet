@@ -13,16 +13,6 @@ Grid::~Grid()
 
 void Grid::Grid_Init(Vector2f windowsize)
 {
-	// Load Shaders
-	sandshader.loadFromFile("Shaders/path.frag",Shader::Type::Fragment);
-	sandshader.setUniform("resolution", windowsize);
-	grassshader.loadFromFile("Shaders/buildarea.frag", Shader::Type::Fragment);
-	grassshader.setUniform("resolution", windowsize);
-	towerplotshader.loadFromFile("Shaders/buildings.frag", Shader::Type::Fragment);
-	towerplotshader.setUniform("resolution", windowsize);
-	bottomsectionshader.loadFromFile("Shaders/buildarea.frag", Shader::Type::Fragment);
-	bottomsectionshader.setUniform("resolution", windowsize);
-
 	// Load Textures
 	turretTexture.loadFromFile("Textures/Turret.png");
 	sniperTexture.loadFromFile("Textures/Sniper.png");
@@ -73,19 +63,13 @@ void Grid::Grid_Init(Vector2f windowsize)
 	section.setSize({ windowsize.x, windowsize.y / 8 }); 
 	section.setPosition({ 0, bottom.getPosition().y + (windowsize.y /8)});
 
-
-	buildplot bottom;
-	buildplots.push_back(bottom);
-
 	// Building squares
 	float k = 0;
 	for (size_t s = 0; s <= TOWER_AMOUNT; s++)
 	{
 		buildplot bottom;
 		bottom.build = false;
-		bottom.shape.setFillColor(Color::Yellow);
-		bottom.shape.setOutlineColor(Color::Black);
-		bottom.shape.setOutlineThickness(windowsize.x/1000);
+		bottom.shape.setFillColor(Color::White);
 		bottom.shape.setSize({ windowsize.x/TOWER_SIZE, windowsize.x/TOWER_SIZE });
 		bottom.shape.setPosition({(windowsize.x/TOWER_START_POS)+k,windowsize.y - (windowsize.y/9)});
 		buildplots.push_back(bottom);
@@ -117,6 +101,20 @@ void Grid::Grid_Init(Vector2f windowsize)
 		option.setSize({ windowsize.x / 50, windowsize.x / 50 });
 		toweroptionsrect.push_back(option);
 	}
+
+	Grid_LoadShaders(windowsize);
+}
+
+void Grid::Grid_LoadShaders(Vector2f windowsize)
+{
+	sandshader.loadFromFile("Shaders/path.frag", Shader::Type::Fragment);
+	sandshader.setUniform("resolution", windowsize);
+	grassshader.loadFromFile("Shaders/grass.frag", Shader::Type::Fragment);
+	grassshader.setUniform("resolution", windowsize);
+	towerplotshader.loadFromFile("Shaders/buildings.frag", Shader::Type::Fragment);
+	towerplotshader.setUniform("resolution", section.getSize());
+	bottomsectionshader.loadFromFile("Shaders/buildarea.frag", Shader::Type::Fragment);
+	bottomsectionshader.setUniform("resolution", windowsize);
 }
 
 void Grid::Grid_SelectTower(Vector2f Mousepos, Vector2f windowsize, size_t index)

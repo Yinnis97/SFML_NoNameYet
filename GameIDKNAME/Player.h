@@ -7,12 +7,8 @@
 using namespace sf;
 #define STATS_POS_INDEX 12
 
-class Player
+struct Resources
 {
-private:
-
-public:
-	
 	uint32_t gold;
 	uint32_t silver;
 	uint32_t copper;
@@ -20,6 +16,15 @@ public:
 	uint32_t green_sapphire;
 	uint32_t yellow_sapphire;
 	uint32_t orange_sapphire;
+};
+
+class Player
+{
+private:
+
+public:
+
+	Resources resources;
 
 	uint16_t health;
 	Font font;

@@ -20,15 +20,15 @@ void Player::Player_Init(Vector2f windowsize)
 	Color color_yellow_sapphire(224,232,0,255);
 	Color color_orange_sapphire(225, 110, 0,255);
 
-	gold = 10;
-	silver = 100;
-	copper = 1000;
+	resources.gold = 10;
+	resources.silver = 100;
+	resources.copper = 1000;
 	health = 1000;
 
-	blue_sapphire = 0;
-	green_sapphire = 0;
-	yellow_sapphire = 0;
-	orange_sapphire = 0;
+	resources.blue_sapphire = 0;
+	resources.green_sapphire = 0;
+	resources.yellow_sapphire = 0;
+	resources.orange_sapphire = 0;
 
 	if (!font.openFromFile("Fonts/PixeloidSans.ttf"))
 	{
@@ -92,16 +92,16 @@ void Player::Player_Proccess_Loot(Vector2u loot)
 	switch (loot.x)
 	{
 	case 1:
-		blue_sapphire = blue_sapphire + loot.y;
+		resources.blue_sapphire = resources.blue_sapphire + loot.y;
 		break;
 	case 2:
-		green_sapphire = green_sapphire + loot.y;
+		resources.green_sapphire = resources.green_sapphire + loot.y;
 		break;
 	case 3:
-		yellow_sapphire = yellow_sapphire + loot.y;
+		resources.yellow_sapphire = resources.yellow_sapphire + loot.y;
 		break;
 	case 4:
-		orange_sapphire = orange_sapphire + loot.y;
+		resources.orange_sapphire = resources.orange_sapphire + loot.y;
 		break;
 	}
 }
@@ -109,15 +109,15 @@ void Player::Player_Proccess_Loot(Vector2u loot)
 void Player::Player_Update(Vector2f windowsize)
 {
 	std::stringstream ss_gold, ss_silver, ss_copper, ss_health, ss_b_sapphire, ss_g_sapphire, ss_y_sapphire, ss_o_sapphire; 
-	ss_gold << "Gold: " << gold << std::endl;
-	ss_silver << "Silver: " << silver << std::endl;
-	ss_copper << "Copper: " << copper << std::endl;
+	ss_gold << "Gold: " << resources.gold << std::endl;
+	ss_silver << "Silver: " << resources.silver << std::endl;
+	ss_copper << "Copper: " << resources.copper << std::endl;
 	ss_health << "Health: " << health << std::endl;
 
-	ss_b_sapphire << "Blue Sapphire: " << blue_sapphire << std::endl;
-	ss_g_sapphire << "Green Sapphire: " << green_sapphire << std::endl;
-	ss_y_sapphire << "Yellow Sapphire: " << yellow_sapphire << std::endl;
-	ss_o_sapphire << "Orange Sapphire: " << orange_sapphire << std::endl;
+	ss_b_sapphire << "Blue Sapphire: " << resources.blue_sapphire << std::endl;
+	ss_g_sapphire << "Green Sapphire: " << resources.green_sapphire << std::endl;
+	ss_y_sapphire << "Yellow Sapphire: " << resources.yellow_sapphire << std::endl;
+	ss_o_sapphire << "Orange Sapphire: " << resources.orange_sapphire << std::endl;
 
 	gold_text->setString(ss_gold.str());
 	silver_text->setString(ss_silver.str());

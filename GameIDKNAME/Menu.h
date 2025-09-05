@@ -41,10 +41,9 @@ public:
 
 	void Menu_Init(Vector2f windowsize);
 	
-	void Menu_SaveGame();
-	void Menu_LoadGame();
+	void Menu_LoadCredits();
 
-	void Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu);
+	void Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu, bool* loadGame);
 	void Menu_Render(RenderWindow* window);
 };
 

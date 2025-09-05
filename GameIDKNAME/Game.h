@@ -9,6 +9,7 @@
 #include "Grid.h"
 #include "Player.h"
 #include "Menu.h"
+#include <fstream>
 
 using namespace sf;
 
@@ -31,7 +32,7 @@ private:
 
 
 public:
-
+	bool loadGame;
 	bool inMenu;
 
 	Game();
@@ -47,6 +48,9 @@ public:
 
 	const Vector2f GetWindowSize();
 	const Vector2f GetMousePos();
+
+	void LoadGame();
+	void SaveGame();
 
 	void EntitySpawn();
 	void EntityHitDetection(size_t index);

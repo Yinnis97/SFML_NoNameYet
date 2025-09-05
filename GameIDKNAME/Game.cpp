@@ -16,6 +16,7 @@ void Game::Init_Var()
 	window = nullptr;
 	mouseheld = false;
 	inMenu = true;
+	loadGame = false;
 	spawninterval = 0.0f;
 	dt = dt_clock.restart().asSeconds();
 }
@@ -54,6 +55,7 @@ void Game::Pollevents()
 			switch (keyPressed->scancode)
 			{
 			case Keyboard::Scancode::Escape:
+				SaveGame();
 				window->close();
 				break;
 			}
@@ -74,6 +76,44 @@ const Vector2f Game::GetWindowSize()
 const Vector2f Game::GetMousePos()
 {
 	return window->mapPixelToCoords(Mouse::getPosition(*this->window));
+}
+
+void Game::LoadGame()
+{
+	char key = 0xA5;
+	std::ifstream file("Saves/save.dat", std::ios::binary);
+
+	// Treat as char*
+	char* data = reinterpret_cast<char*>(&player->resources);
+	size_t dataSize = sizeof(Resources);
+
+	// Read file
+	file.read(data, dataSize);
+
+	// Decryption
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		data[i] ^= key;
+	}
+}
+
+void Game::SaveGame()
+{
+	char key = 0xA5;
+	std::ofstream file("Saves/save.dat", std::ios::binary);
+
+	// Treat as char*
+	char* data = reinterpret_cast<char*>(&player->resources);
+	size_t dataSize = sizeof(Resources);
+
+	// Encryption
+	for (size_t i = 0; i < dataSize; i++)
+	{
+		data[i] ^= key;
+	}
+
+	// Write to file
+	file.write(data, dataSize);
 }
 
 void Game::EntitySpawn()
@@ -125,10 +165,10 @@ void Game::EntityHitDetection(size_t index)
 		switch (entities[index]->GetID())
 		{
 		case 'E':
-			player->copper = player->copper + 1;
+			player->resources.copper = player->resources.copper + 1;
 			break;
 		case 'B':
-			player->gold = player->gold + 1;
+			player->resources.gold = player->resources.gold + 1;
 			break;
 		default:
 			std::cout << "Error at switch case entities GetID\n";
@@ -157,7 +197,13 @@ void Game::Update()
 
 	if (inMenu)
 	{
-		menu->Menu_Update(GetMousePos(), GetWindowSize(),&inMenu);
+		menu->Menu_Update(GetMousePos(), GetWindowSize(), &inMenu, &loadGame);
+		if (loadGame)
+		{
+			LoadGame();
+			loadGame = false;
+			inMenu = false;
+		}
 	}
 	else
 	{

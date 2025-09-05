@@ -98,17 +98,12 @@ void Menu::Menu_Init(Vector2f windowsize)
 
 }
 
-void Menu::Menu_SaveGame()
+void Menu::Menu_LoadCredits()
 {
 
 }
 
-void Menu::Menu_LoadGame()
-{
-
-}
-
-void Menu::Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu)
+void Menu::Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu, bool* loadGame)
 {
 	backgroundShader.setUniform("time", shaderClock.getElapsedTime().asSeconds());
 
@@ -142,15 +137,14 @@ void Menu::Menu_Update(Vector2f mousepos, Vector2f windowsize, bool* inMenu)
 		if (startbutton.getGlobalBounds().contains(mousepos) && startpressed)
 		{
 			*inMenu = false;
-			std::cout << "start pressed\n";
 		}
 		if (loadbutton.getGlobalBounds().contains(mousepos) && loadpressed)
 		{
-			std::cout << "Load pressed\n";
+			*loadGame = true;
 		}
 		if (creditsbutton.getGlobalBounds().contains(mousepos) && creditspressed)
 		{
-			std::cout << "Credits Pressed\n";
+			Menu_LoadCredits();
 		}
 
 		startbutton.setOutlineColor(*dark_gray_color);
